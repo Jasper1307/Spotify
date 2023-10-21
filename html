@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bard's Music Assistant</title>
+</head>
+<body>
+  <h1>Bard's Music Assistant</h1>
+  <p>This music assistant helps you discover and enjoy music.</p>
+  <form action="/search" method="GET">
+    <label for="track_name">Track name:</label>
+    <input type="text" name="track_name" id="track_name">
+    <label for="artist_name">Artist name:</label>
+    <input type="text" name="artist_name" id="artist_name">
+    <input type="submit" value="Search">
+  </form>
+  <div id="results"></div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#search').submit(function(event) {
+      event.preventDefault();
+      var track_name = $('#track_name').val();
+      var artist_name = $('#artist_name').val();
+      $.ajax({
+        url: '/search',
+        type: 'GET',
+        data: {
+          track_name: track_name,
+          artist_name: artist_name
+        },
+        success: function(data) {
+          $('#results').html(data);
+        }
+      });
+    });
+  });
+</script>
+</html>
